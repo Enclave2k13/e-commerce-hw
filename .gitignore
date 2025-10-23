@@ -1,0 +1,17 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# PyCharm
+.idea/
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Python cache
+__pycache__/
+*.pyc

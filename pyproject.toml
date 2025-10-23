@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "e-commerce-hw"
+version = "0.1.0"
+description = "E-commerce homework project"
+authors = ["Nikita Komissarov <you@example.com>"]
+readme = "README.md"
+packages = [{include = "src", from = "."}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+requests = "*"  # добавим для примера
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+pytest-cov = "^6.2.1"
+
+[tool.poetry.group.lint.dependencies]
+black = "^25.9.0"
+isort = "^7.0.0"
+flake8 = "^7.3.0"
+flake8-docstrings = "^1.7.0"
+flake8-bugbear = "^25.10.21"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 119
+
+[tool.black]
+line-length = 119
+target-version = ['py313']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  \.eggs
+  | \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
