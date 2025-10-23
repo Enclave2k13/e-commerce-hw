@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "name": "Электроника",
+      "description": "Техника и гаджеты",
+      "products": [
+        {
+          "name": "iPhone 15",
+          "description": "Смартфон Apple",
+          "price": 999.99,
+          "quantity": 10
+        },
+        {
+          "name": "MacBook Pro",
+          "description": "Ноутбук для работы",
+          "price": 1999.99,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "name": "Книги",
+      "description": "Художественная литература",
+      "products": [
+        {
+          "name": "Мастер и Маргарита",
+          "description": "Роман Булгакова",
+          "price": 15.50,
+          "quantity": 20
+        }
+      ]
+    }
+  ]
+}
