@@ -5,16 +5,16 @@ from product import Product
 
 
 class TestCategory:
-    """Тесты для класса Category"""
+    """Тесты для класса Category."""
 
     # Фикстура - подготовка данных для тестов
     @pytest.fixture
     def sample_products(self):
-        """Создаем тестовые товары"""
+        """Создаем тестовые товары."""
         return [Product("Телефон", "Смартфон", 500.0, 10), Product("Ноутбук", "Игровой", 1500.0, 5)]
 
     def test_category_creation(self, sample_products):
-        """Проверяем создание категории"""
+        """Проверяем создание категории."""
         category = Category("Электроника", "Техника", sample_products)
 
         assert category.name == "Электроника"
@@ -22,7 +22,7 @@ class TestCategory:
         assert len(category.products) == 2
 
     def test_category_count(self, sample_products):
-        """Проверяем подсчет категорий"""
+        """Проверяем подсчет категорий."""
         # Сбрасываем счетчик перед тестом
         Category.category_count = 0
 
@@ -30,9 +30,11 @@ class TestCategory:
         category2 = Category("Одежда", "Модная одежда", [])
 
         assert Category.category_count == 2
+        assert category1.name == "Электроника"
+        assert category2.name == "Одежда"
 
     def test_product_count(self, sample_products):
-        """Проверяем подсчет товаров"""
+        """Проверяем подсчет товаров."""
         # Сбрасываем счетчик перед тестом
         Category.category_count = 0
         Category.product_count = 0

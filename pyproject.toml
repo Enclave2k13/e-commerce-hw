@@ -47,3 +47,26 @@ extend-exclude = '''
   | dist
 )/
 '''
+
+[tool.coverage.run]
+source = ["src"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "except:",
+]
+
+omit = [
+    "src/icons.py",
+    "src/__init__.py",
+    "src/main.py",
+]
