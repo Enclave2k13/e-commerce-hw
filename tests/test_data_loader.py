@@ -20,7 +20,14 @@ class TestDataLoader:
                 {
                     "name": "Electronics",
                     "description": "Tech gadgets",
-                    "products": [{"name": "Phone", "description": "Smartphone", "price": 500.0, "quantity": 10}],
+                    "products": [
+                        {
+                            "name": "Phone",
+                            "description": "Smartphone",
+                            "price": 500.0,
+                            "quantity": 10
+                        }
+                    ],
                 }
             ]
         }
@@ -37,8 +44,8 @@ class TestDataLoader:
             # Проверяем результат
             assert len(categories) == 1
             assert categories[0].name == "Electronics"
-            assert len(categories[0].products) == 1
-            assert categories[0].products[0].name == "Phone"
+            # Вместо len() проверяем содержимое строки
+            assert "Phone, 500.0 руб. Остаток: 10 шт." in categories[0].products
 
         finally:
             # Удаляем временный файл

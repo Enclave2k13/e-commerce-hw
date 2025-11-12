@@ -1,3 +1,5 @@
+"""Модуль для тестирования категорий товара."""
+
 import pytest
 
 from category import Category
@@ -19,7 +21,9 @@ class TestCategory:
 
         assert category.name == "Электроника"
         assert category.description == "Техника"
-        assert len(category.products) == 2
+        # Вместо len(category.products) проверяем содержимое строки
+        assert "Телефон, 500.0 руб. Остаток: 10 шт." in category.products
+        assert "Ноутбук, 1500.0 руб. Остаток: 5 шт." in category.products
 
     def test_category_count(self, sample_products):
         """Проверяем подсчет категорий."""
@@ -35,11 +39,39 @@ class TestCategory:
 
     def test_product_count(self, sample_products):
         """Проверяем подсчет товаров."""
-        # Сбрасываем счетчик перед тестом
         Category.category_count = 0
         Category.product_count = 0
 
         category = Category("Электроника", "Техника", sample_products)
 
         assert Category.product_count == 2
-        assert len(category.products) == 2
+
+    def test_private_products_access(self):
+        """Тест приватности атрибута продуктов."""
+        product = Product("Телефон", "Смартфон", 500, 10)
+        category = Category("Электроника", "Техника", [product])
+
+        # Нельзя обратиться напрямую к __products
+        with pytest.raises(AttributeError):
+            _ = category.__products
+
+    def test_products_getter_format(self):
+        """Тест формата вывода геттера продуктов."""
+        product1 = Product("Телефон", "Смартфон", 500, 10)
+        product2 = Product("Ноутбук", "Игровой", 1000, 5)
+        category = Category("Электроника", "Техника", [product1, product2])
+
+        products_str = category.products
+        assert "Телефон, 500 руб. Остаток: 10 шт." in products_str
+        assert "Ноутбук, 1000 руб. Остаток: 5 шт." in products_str
+
+    def test_add_product_method(self):
+        """Тест метода add_product."""
+        category = Category("Электроника", "Техника", [])
+        product = Product("Телефон", "Смартфон", 500, 10)
+
+        initial_count = Category.product_count
+        category.add_product(product)
+
+        assert "Телефон, 500 руб. Остаток: 10 шт." in category.products
+        assert Category.product_count == initial_count + 1
