@@ -20,14 +20,7 @@ class TestDataLoader:
                 {
                     "name": "Electronics",
                     "description": "Tech gadgets",
-                    "products": [
-                        {
-                            "name": "Phone",
-                            "description": "Smartphone",
-                            "price": 500.0,
-                            "quantity": 10
-                        }
-                    ],
+                    "products": [{"name": "Phone", "description": "Smartphone", "price": 500.0, "quantity": 10}],
                 }
             ]
         }

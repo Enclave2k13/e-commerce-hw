@@ -42,7 +42,7 @@ class TestCategory:
         Category.category_count = 0
         Category.product_count = 0
 
-        category = Category("Электроника", "Техника", sample_products)
+        Category("Электроника", "Техника", sample_products)
 
         assert Category.product_count == 2
 
@@ -75,3 +75,20 @@ class TestCategory:
 
         assert "Телефон, 500 руб. Остаток: 10 шт." in category.products
         assert Category.product_count == initial_count + 1
+
+    def test_category_str_representation(self, sample_products):
+        """Тест строкового представления Category."""
+        category = Category("Электроника", "Техника", sample_products)
+
+        # Проверяем что выводится название и общее количество
+        result = str(category)
+        assert "Электроника" in result
+        assert "количество продуктов: 15 шт." in result  # 10 + 5
+
+    def test_get_products_method(self, sample_products):
+        """Тест метода get_products."""
+        category = Category("Электроника", "Техника", sample_products)
+
+        products_list = category.get_products()
+        assert len(products_list) == 2
+        assert isinstance(products_list, list)

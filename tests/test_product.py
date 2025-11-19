@@ -82,3 +82,24 @@ class TestProduct:
         assert result.quantity == 15
         assert result.price == 600.0
         assert result.description == "Новый"
+
+    def test_product_str_representation(self):
+        """Тест строкового представления Product."""
+        product = Product("Телефон", "Смартфон", 500, 10)
+        expected = "Телефон, 500 руб. Остаток: 10 шт."
+        assert str(product) == expected
+
+    def test_product_addition(self):
+        """Тест сложения продуктов."""
+        product1 = Product("Телефон", "Смартфон", 100, 10)
+        product2 = Product("Ноутбук", "Игровой", 200, 2)
+
+        total_value = product1 + product2
+        assert total_value == 1400  # 100*10 + 200*2
+
+    def test_product_addition_type_error(self):
+        """Тест ошибки при сложении с неправильным типом."""
+        product = Product("Телефон", "Смартфон", 100, 10)
+
+        with pytest.raises(TypeError, match="Можно складывать только объекты Product"):
+            product + "не продукт"

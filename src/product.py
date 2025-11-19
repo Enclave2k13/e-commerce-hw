@@ -16,6 +16,16 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self):
+        """Форматированный вывод продуктов, их цен и остатка."""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        """Получение суммы всех товаров на складе."""
+        if not isinstance(other, Product):
+            raise TypeError("Можно складывать только объекты Product")
+        return self.price * self.quantity + other.price * other.quantity
+
     @property
     def price(self):
         """Геттер."""
@@ -23,7 +33,7 @@ class Product:
 
     @price.setter
     def price(self, new_price):
-        """Сеттер с проверками"""
+        """Сеттер с проверками."""
         if new_price <= 0:
             raise ValueError("Цена не должна быть нулевая или отрицательная")
 
