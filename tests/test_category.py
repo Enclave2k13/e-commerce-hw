@@ -3,7 +3,9 @@
 import pytest
 
 from category import Category
+from lawn_grass import LawnGrass
 from product import Product
+from smartphone import Smartphone
 
 
 class TestCategory:
@@ -92,3 +94,35 @@ class TestCategory:
         products_list = category.get_products()
         assert len(products_list) == 2
         assert isinstance(products_list, list)
+
+    def test_add_product_valid_types(self, sample_products):
+        """Тест добавления различных типов продуктов."""
+        category = Category("Электроника", "Техника", [])
+
+        # Обычный продукт
+        product = Product("Телефон", "Смартфон", 500, 10)
+        category.add_product(product)
+        assert "Телефон, 500 руб. Остаток: 10 шт." in category.products
+
+        # Смартфон (наследник)
+        smartphone = Smartphone("iPhone", "Смартфон", 1000, 5, "Высокая", "15", 256, "Black")
+        category.add_product(smartphone)
+        assert "iPhone, 1000 руб. Остаток: 5 шт." in category.products
+
+        # Газонная трава (наследник)
+        grass = LawnGrass("Трава", "Газонная", 15, 100, "Россия", 14, "Зеленый")
+        category.add_product(grass)
+        assert "Трава, 15 руб. Остаток: 100 шт." in category.products
+
+    def test_add_product_invalid_type(self):
+        """Тест добавления неподходящего типа."""
+        category = Category("Электроника", "Техника", [])
+
+        with pytest.raises(TypeError, match="Можно добавлять только продукты"):
+            category.add_product("не продукт")
+
+        with pytest.raises(TypeError, match="Можно добавлять только продукты"):
+            category.add_product(123)
+
+        with pytest.raises(TypeError, match="Можно добавлять только продукты"):
+            category.add_product([])

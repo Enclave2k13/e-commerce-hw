@@ -2,7 +2,9 @@
 
 import pytest
 
+from lawn_grass import LawnGrass
 from product import Product
+from smartphone import Smartphone
 
 
 class TestProduct:
@@ -101,5 +103,33 @@ class TestProduct:
         """Тест ошибки при сложении с неправильным типом."""
         product = Product("Телефон", "Смартфон", 100, 10)
 
-        with pytest.raises(TypeError, match="Можно складывать только объекты Product"):
+        with pytest.raises(TypeError):
             product + "не продукт"
+
+    def test_product_addition_same_types(self):
+        """Тест сложения одинаковых типов продуктов."""
+        smartphone1 = Smartphone("iPhone", "Смартфон", 100, 10, "Высокая", "15", 256, "Black")
+        smartphone2 = Smartphone("Samsung", "Смартфон", 200, 2, "Средняя", "S20", 128, "White")
+
+        total = smartphone1 + smartphone2
+        assert total == 1400
+
+    def test_product_addition_different_types(self):
+        """Тест ошибки при сложении разных типов продуктов."""
+        smartphone = Smartphone("iPhone", "Смартфон", 100, 10, "Высокая", "15", 256, "Black")
+        grass = LawnGrass("Трава", "Газонная", 15, 100, "Россия", 14, "Зеленый")
+
+        with pytest.raises(TypeError):
+            smartphone + grass
+
+        with pytest.raises(TypeError):
+            grass + smartphone
+
+    def test_product_addition_inheritance_works(self):
+        """Тест на проверку, что наследование не ломает сложение."""
+        # Обычные продукты
+        product1 = Product("Товар1", "Описание", 50, 20)
+        product2 = Product("Товар2", "Описание", 30, 10)
+
+        total = product1 + product2
+        assert total == 1300
