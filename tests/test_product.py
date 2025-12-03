@@ -2,9 +2,9 @@
 
 import pytest
 
-from lawn_grass import LawnGrass
-from product import Product
-from smartphone import Smartphone
+from src.lawn_grass import LawnGrass
+from src.product import Product
+from src.smartphone import Smartphone
 
 
 class TestProduct:
