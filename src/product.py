@@ -1,5 +1,7 @@
 """Модуль товаров для интернет-магазина."""
 
+from zero_quantity_error import ZeroQuantityError
+
 from .base_product import BaseProduct
 from .logging_mixin import LoggingMixin
 
@@ -14,6 +16,12 @@ class Product(LoggingMixin, BaseProduct):
 
     def __init__(self, name, description, price, quantity):
         """Инициализирует товар с названием, описанием, ценой и количеством."""
+        if quantity == 0:
+            raise ZeroQuantityError("Товар с нулевым количеством не может быть добавлен")
+
+        if price <= 0:
+            raise ValueError("Цена должна быть положительной")
+
         super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description

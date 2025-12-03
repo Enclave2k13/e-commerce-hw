@@ -1,5 +1,7 @@
 """Модуль категорий для интернет-магазина."""
 
+from zero_quantity_error import ZeroQuantityError
+
 from .product import Product
 from .purchase import Purchase
 
@@ -32,8 +34,22 @@ class Category(Purchase):
         """Добавляет товар в категорию."""
         if not isinstance(product, Product):
             raise TypeError("Можно добавлять только продукты и их наследников")
-        self.__products.append(product)
-        Category.product_count += 1
+
+        try:
+            if product.quantity == 0:
+                raise ZeroQuantityError(f"Товар '{product.name}' имеет нулевое количество")
+            self.__products.append(product)
+            Category.product_count += 1
+
+        except ZeroQuantityError as e:
+            print(f"Ошибка при добавлении товара: {e}")
+            raise
+
+        else:
+            print(f"Товар '{product.name}' успешно добавлен в категорию '{self.name}'")
+
+        finally:
+            print("Обработка добавления товара завершена")
 
     @property
     def products(self):
@@ -51,3 +67,13 @@ class Category(Purchase):
     def get_total_price(self):
         """Возвращает общую сумму товаров."""
         return sum(p.price * p.quantity for p in self.__products)
+
+    def average_price(self) -> float:
+        """Возвращает среднюю цену товаров в категории."""
+        try:
+            total_price = self.get_total_price()
+            total_quantity = self.get_total_quantity()
+            return total_price / total_quantity
+
+        except ZeroDivisionError:
+            return 0
