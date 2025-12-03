@@ -6,6 +6,7 @@ from src.category import Category
 from src.lawn_grass import LawnGrass
 from src.product import Product
 from src.smartphone import Smartphone
+from zero_quantity_error import ZeroQuantityError
 
 
 class TestCategory:
@@ -131,5 +132,27 @@ class TestCategory:
         """Тест что Category реализует методы Purchase."""
         category = Category("Электроника", "Техника", sample_products)
 
-        assert category.get_total_quantity() == 15  # 10 + 5
-        assert category.get_total_price() == 12500  # 500*10 + 1500*5
+        assert category.get_total_quantity() == 15
+        assert category.get_total_price() == 12500
+
+    def test_average_price_empty_category(self):
+        """Тест: средняя цена пустой категории равна 0."""
+        category = Category("Пустая", "Нет товаров", [])
+        assert category.average_price() == 0.0
+
+    def test_average_price_single_product(self):
+        """Тест: средняя цена с одним товаром."""
+        product = Product("Телефон", "Смартфон", 500, 10)
+        category = Category("Электроника", "Техника", [product])
+        assert category.average_price() == 500.0
+
+    def test_average_price_multiple_products(self):
+        """Тест: средняя цена с несколькими товарами."""
+        products = [
+            Product("Телефон", "Смартфон", 500, 10),
+            Product("Ноутбук", "Игровой", 1000, 5),
+            Product("Наушники", "Беспроводные", 200, 20),
+        ]
+        category = Category("Электроника", "Техника", products)
+
+        assert category.average_price() == 400.0
