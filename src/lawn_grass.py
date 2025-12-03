@@ -1,6 +1,6 @@
 """Модуль газонной травы."""
 
-from product import Product
+from .product import Product
 
 
 class LawnGrass(Product):

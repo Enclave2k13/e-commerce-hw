@@ -1,9 +1,10 @@
 """Модуль категорий для интернет-магазина."""
 
-from product import Product
+from .product import Product
+from .purchase import Purchase
 
 
-class Category:
+class Category(Purchase):
     """Представляет категорию товаров."""
 
     name: str
@@ -42,3 +43,11 @@ class Category:
     def get_products(self):
         """Возвращает список товаров категории."""
         return self.__products
+
+    def get_total_quantity(self):
+        """Возвращает общее количество товаров."""
+        return sum(p.quantity for p in self.__products)
+
+    def get_total_price(self):
+        """Возвращает общую сумму товаров."""
+        return sum(p.price * p.quantity for p in self.__products)

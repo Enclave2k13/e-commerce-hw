@@ -1,7 +1,10 @@
 """Модуль товаров для интернет-магазина."""
 
+from .base_product import BaseProduct
+from .logging_mixin import LoggingMixin
 
-class Product:
+
+class Product(LoggingMixin, BaseProduct):
     """Представляет товар в магазине."""
 
     name: str
@@ -11,6 +14,7 @@ class Product:
 
     def __init__(self, name, description, price, quantity):
         """Инициализирует товар с названием, описанием, ценой и количеством."""
+        super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description
         self.__price = price

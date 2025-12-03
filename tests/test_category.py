@@ -2,10 +2,10 @@
 
 import pytest
 
-from category import Category
-from lawn_grass import LawnGrass
-from product import Product
-from smartphone import Smartphone
+from src.category import Category
+from src.lawn_grass import LawnGrass
+from src.product import Product
+from src.smartphone import Smartphone
 
 
 class TestCategory:
@@ -126,3 +126,10 @@ class TestCategory:
 
         with pytest.raises(TypeError, match="Можно добавлять только продукты"):
             category.add_product([])
+
+    def test_category_implements_purchase_methods(self, sample_products):
+        """Тест что Category реализует методы Purchase."""
+        category = Category("Электроника", "Техника", sample_products)
+
+        assert category.get_total_quantity() == 15  # 10 + 5
+        assert category.get_total_price() == 12500  # 500*10 + 1500*5

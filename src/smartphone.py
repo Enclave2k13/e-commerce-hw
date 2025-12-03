@@ -1,6 +1,6 @@
 """Модуль смартфонов."""
 
-from product import Product
+from .product import Product
 
 
 class Smartphone(Product):

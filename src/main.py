@@ -2,8 +2,8 @@
 
 import os
 
-from category import Category
-from data_loader import load_data_from_json
+from .category import Category
+from .data_loader import load_data_from_json
 
 
 def main():
