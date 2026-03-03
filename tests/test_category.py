@@ -138,13 +138,13 @@ class TestCategory:
     def test_average_price_empty_category(self):
         """Тест: средняя цена пустой категории равна 0."""
         category = Category("Пустая", "Нет товаров", [])
-        assert category.average_price() == 0.0
+        assert category.middle_price() == 0.0
 
     def test_average_price_single_product(self):
         """Тест: средняя цена с одним товаром."""
         product = Product("Телефон", "Смартфон", 500, 10)
         category = Category("Электроника", "Техника", [product])
-        assert category.average_price() == 500.0
+        assert category.middle_price() == 500.0
 
     def test_average_price_multiple_products(self):
         """Тест: средняя цена с несколькими товарами."""
@@ -155,4 +155,4 @@ class TestCategory:
         ]
         category = Category("Электроника", "Техника", products)
 
-        assert category.average_price() == 400.0
+        assert category.middle_price() == 400.0

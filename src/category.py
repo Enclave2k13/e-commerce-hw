@@ -68,7 +68,7 @@ class Category(Purchase):
         """Возвращает общую сумму товаров."""
         return sum(p.price * p.quantity for p in self.__products)
 
-    def average_price(self) -> float:
+    def middle_price(self) -> float:
         """Возвращает среднюю цену товаров в категории."""
         try:
             total_price = self.get_total_price()
