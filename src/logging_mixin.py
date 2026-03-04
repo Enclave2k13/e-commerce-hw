@@ -13,4 +13,4 @@ class LoggingMixin:
     def __init__(self, *args, **kwargs):
         """Инициализация с логированием создания объекта."""
         super().__init__(*args, **kwargs)
-        print(f"Создан: {repr(self)}")
+        print(f"Создан: {str(self)}")

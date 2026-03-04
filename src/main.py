@@ -1,48 +1,22 @@
-"""Главный модуль приложения интернет-магазина."""
+from src.category import Category
+from src.product import Product
 
-import os
-
-from .category import Category
-from .data_loader import load_data_from_json
-
-
-def main():
-    """Основная функция для тестирования загрузки данных из json."""
-    print("🚀 Тестируем загрузку данных из JSON...\n")
-
+if __name__ == '__main__':
     try:
-        # Получаем абсолютный путь к products.json
-        current_dir = os.path.dirname(__file__)
-        project_root = os.path.dirname(current_dir)  # поднимаемся на уровень выше
-        json_path = os.path.join(project_root, "products.json")
+        product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+    except ValueError as e:
+        print(
+            "Возникла ошибка ValueError прерывающая работу программы при попытке добавить продукт с нулевым количеством")
+    else:
+        print("Не возникла ошибка ValueError при попытке добавить продукт с нулевым количеством")
 
-        # Загружаем данные
-        categories = load_data_from_json(json_path)
+    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
 
-        # Выводим результат
-        print(f"✅ Успешно загружено категорий: {len(categories)}")
-        print(f"📊 Всего категорий в системе: {Category.category_count}")
-        print(f"📦 Всего товаров в системе: {Category.product_count}")
-        print("\n" + "=" * 50 + "\n")
+    category1 = Category("Смартфоны", "Категория смартфонов", [product1, product2, product3])
 
-        # Детальная информация по каждой категории
-        for i, category in enumerate(categories, 1):
-            print(f"🏷️  Категория {i}: {category.name}")
-            print(f"📝 Описание: {category.description}")
-            print(f"🛍️  Товаров в категории: {len(category.products)}")
+    print(category1.middle_price())
 
-            for j, product in enumerate(category.products, 1):
-                print(f"   {j}. {product.name}")
-                print(f"      💰 Цена: {product.price} руб.")
-                print(f"      📦 В наличии: {product.quantity} шт.")
-                print(f"      📋 Описание: {product.description}")
-            print("-" * 30)
-
-    except FileNotFoundError:
-        print("❌ Ошибка: Файл products.json не найден!")
-    except Exception as e:
-        print(f"❌ Ошибка при загрузке данных: {e}")
-
-
-if __name__ == "__main__":
-    main()
+    category_empty = Category("Пустая категория", "Категория без продуктов", [])
+    print(category_empty.middle_price())

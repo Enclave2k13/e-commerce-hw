@@ -22,11 +22,12 @@ class Product(LoggingMixin, BaseProduct):
         if price <= 0:
             raise ValueError("Цена должна быть положительной")
 
-        super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+
+        super().__init__(name, description, price, quantity)
 
     def __str__(self):
         """Форматированный вывод продуктов, их цен и остатка."""
@@ -87,7 +88,6 @@ class Product(LoggingMixin, BaseProduct):
         """Создает товар с проверкой дубликатов."""
         for existing in existing_products or []:
             if existing.name == product_data["name"]:
-                # Трансформируем → Создаём
                 merged_data = cls._merge_product_data(existing, product_data)
                 return cls._create_product(merged_data)
 
