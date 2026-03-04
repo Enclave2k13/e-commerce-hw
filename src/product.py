@@ -1,5 +1,7 @@
 """Модуль товаров для интернет-магазина."""
 
+from zero_quantity_error import ZeroQuantityError
+
 from .base_product import BaseProduct
 from .logging_mixin import LoggingMixin
 
@@ -14,11 +16,18 @@ class Product(LoggingMixin, BaseProduct):
 
     def __init__(self, name, description, price, quantity):
         """Инициализирует товар с названием, описанием, ценой и количеством."""
-        super().__init__(name, description, price, quantity)
+        if quantity == 0:
+            raise ZeroQuantityError("Товар с нулевым количеством не может быть добавлен")
+
+        if price <= 0:
+            raise ValueError("Цена должна быть положительной")
+
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+
+        super().__init__(name, description, price, quantity)
 
     def __str__(self):
         """Форматированный вывод продуктов, их цен и остатка."""
@@ -79,7 +88,6 @@ class Product(LoggingMixin, BaseProduct):
         """Создает товар с проверкой дубликатов."""
         for existing in existing_products or []:
             if existing.name == product_data["name"]:
-                # Трансформируем → Создаём
                 merged_data = cls._merge_product_data(existing, product_data)
                 return cls._create_product(merged_data)
 

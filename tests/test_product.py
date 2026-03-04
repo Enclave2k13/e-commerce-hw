@@ -5,6 +5,7 @@ import pytest
 from src.lawn_grass import LawnGrass
 from src.product import Product
 from src.smartphone import Smartphone
+from zero_quantity_error import ZeroQuantityError
 
 
 class TestProduct:
@@ -133,3 +134,24 @@ class TestProduct:
 
         total = product1 + product2
         assert total == 1300
+
+    def test_product_cannot_have_zero_quantity(self):
+        """Тест: Product нельзя создать с quantity=0."""
+        with pytest.raises(ZeroQuantityError) as error:
+            Product("Телефон", "Смартфон", 500, 0)
+
+        assert "нулевым количеством" in str(error.value)
+
+    def test_product_can_have_positive_quantity(self):
+        """Тест: Product можно создать с quantity>0."""
+        product = Product("Телефон", "Смартфон", 500, 5)
+
+        assert product.quantity == 5
+        assert product.name == "Телефон"
+
+    def test_product_cannot_have_negative_price(self):
+        """Тест: Product нельзя создать с отрицательной ценой."""
+        with pytest.raises(ValueError) as error:
+            Product("Телефон", "Смартфон", -100, 5)
+
+        assert "Цена должна быть положительной" in str(error.value)
